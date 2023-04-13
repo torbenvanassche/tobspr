@@ -14,6 +14,7 @@ public class KeyMapper : Singleton<KeyMapper>
         public KeyBind bind;
     }
     
+    //This could also be a property, it's cleaner but I wanted to assign it in the editor so chose a field instead
     public IconLookUp iconData;
     
     //Odin also adds a searchable enum field. While I don't use the serialization to JSON from it.
@@ -30,7 +31,9 @@ public class KeyMapper : Singleton<KeyMapper>
     //Either store from editor or in Awake, marginal performance difference if performed only once.
     [SerializeField] private List<EntryElement> uiElements = new();
 
-    public Dictionary<string, KeyBind> Bindings
+    //Checking if the dictionary is populated before use, can be optimized but as I mentioned serializing dictionaries is not something unity does
+    //using the List as above would get around this but dictionaries are safer to work with with no real extra overhead.
+    Dictionary<string, KeyBind> Bindings
     {
         get
         {
